@@ -1,7 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Dashboard.css'
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
+    const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+    
+        if (!token) {
+          
+          navigate('/login');
+        }
+      }, [navigate]);
   return (
     <>
    
@@ -17,7 +27,7 @@ function Dashboard() {
                 <span className="navbar-toggler-icon"></span>
             </button>
           
-            <a className="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
+            <a className="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="/">
                 <img src="https://preview.webpixels.io/web/img/logos/clever-primary.svg" alt="..." />
             </a>
            
@@ -25,19 +35,19 @@ function Dashboard() {
                 
                 <div className="dropdown">
                     
-                    <a href="#" id="sidebarAvatar" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="/" id="sidebarAvatar" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div className="avatar-parent-child">
-                            <img alt="Image Placeholder" src="https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar avatar- rounded-circle" />
+                            <img alt=" Placeholder" src="https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar avatar- rounded-circle" />
                             <span className="avatar-child avatar-badge bg-success"></span>
                         </div>
                     </a>
                     
                     <div className="dropdown-menu dropdown-menu-end" aria-labelledby="sidebarAvatar">
-                        <a href="#" className="dropdown-item">Profile</a>
-                        <a href="#" className="dropdown-item">Settings</a>
-                        <a href="#" className="dropdown-item">Billing</a>
+                        <a href="/" className="dropdown-item">Profile</a>
+                        <a href="/" className="dropdown-item">Settings</a>
+                        <a href="/" className="dropdown-item">Billing</a>
                         <hr className="dropdown-divider" />
-                        <a href="#" className="dropdown-item">Logout</a>
+                        <a href="/" className="dropdown-item">Logout</a>
                     </div>
                 </div>
             </div>
@@ -46,28 +56,28 @@ function Dashboard() {
                
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <a className="nav-link" href="/">
                             <i className="bi bi-house"></i> Dashboard
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <a className="nav-link" href="/">
                             <i className="bi bi-bar-chart"></i> Analitycs
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <a className="nav-link" href="/">
                             <i className="bi bi-chat"></i> Messages
                             <span className="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">6</span>
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <a className="nav-link" href="/">
                             <i className="bi bi-bookmarks"></i> Collections
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <a className="nav-link" href="/">
                             <i className="bi bi-people"></i> Users
                         </a>
                     </li>
@@ -77,16 +87,16 @@ function Dashboard() {
                 
                 <ul className="navbar-nav mb-md-4">
                     <li>
-                        <div className="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="#">
+                        <div className="nav-link text-xs font-semibold text-uppercase text-muted ls-wide" href="/">
                             Contacts
                             <span className="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-4">13</span>
                         </div>
                     </li>
                     <li>
-                        <a href="#" className="nav-link d-flex align-items-center">
+                        <a href="/" className="nav-link d-flex align-items-center">
                             <div className="me-4">
                                 <div className="position-relative d-inline-block text-white">
-                                    <img alt="Image Placeholder" src="https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar rounded-circle"/>
+                                    <img alt="Placeholder" src="https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar rounded-circle"/>
                                     <span className="position-absolute bottom-2 end-2 transform translate-x-1/2 translate-y-1/2 border-2 border-solid border-current w-3 h-3 bg-success rounded-circle"></span>
                                 </div>
                             </div>
@@ -104,7 +114,7 @@ function Dashboard() {
                         </a>
                     </li>
                     <li>
-                        <a href="#" className="nav-link d-flex align-items-center">
+                        <a href="/" className="nav-link d-flex align-items-center">
                             <div className="me-4">
                                 <div className="position-relative d-inline-block text-white">
                                     <span className="avatar bg-soft-warning text-warning rounded-circle">JW</span>
@@ -125,7 +135,7 @@ function Dashboard() {
                         </a>
                     </li>
                     <li>
-                        <a href="#" className="nav-link d-flex align-items-center">
+                        <a href="/" className="nav-link d-flex align-items-center">
                             <div className="me-4">
                                 <div className="position-relative d-inline-block text-white">
                                     <img alt="..." src="https://images.unsplash.com/photo-1610899922902-c471ae684eff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar rounded-circle" />
@@ -151,12 +161,12 @@ function Dashboard() {
                 
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <a className="nav-link" href="/">
                             <i className="bi bi-person-square"></i> Account
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <a className="nav-link" href="/">
                             <i className="bi bi-box-arrow-left"></i> Logout
                         </a>
                     </li>
@@ -178,13 +188,13 @@ function Dashboard() {
                          
                         <div className="col-sm-6 col-12 text-sm-end">
                             <div className="mx-n1">
-                                <a href="#" className="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
+                                <a href="/" className="btn d-inline-flex btn-sm btn-neutral border-base mx-1">
                                     <span className=" pe-2">
                                         <i className="bi bi-pencil"></i>
                                     </span>
                                     <span>Edit</span>
                                 </a>
-                                <a href="#" className="btn d-inline-flex btn-sm btn-primary mx-1">
+                                <a href="/" className="btn d-inline-flex btn-sm btn-primary mx-1">
                                     <span className=" pe-2">
                                         <i className="bi bi-plus"></i>
                                     </span>
@@ -196,13 +206,13 @@ function Dashboard() {
                      
                     <ul className="nav nav-tabs mt-4 overflow-x border-0">
                         <li className="nav-item ">
-                            <a href="#" className="nav-link active">All files</a>
+                            <a href="/" className="nav-link active">All files</a>
                         </li>
                         <li className="nav-item">
-                            <a href="#" className="nav-link font-regular">Shared</a>
+                            <a href="/" className="nav-link font-regular">Shared</a>
                         </li>
                         <li className="nav-item">
-                            <a href="#" className="nav-link font-regular">File requests</a>
+                            <a href="/" className="nav-link font-regular">File requests</a>
                         </li>
                     </ul>
                 </div>
@@ -326,7 +336,7 @@ function Dashboard() {
                                 <tr>
                                     <td>
                                         <img alt="..." src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar avatar-sm rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Robert Fox
                                         </a>
                                     </td>
@@ -335,7 +345,7 @@ function Dashboard() {
                                     </td>
                                     <td>
                                         <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-1.png" className="avatar avatar-xs rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Dribbble
                                         </a>
                                     </td>
@@ -348,7 +358,7 @@ function Dashboard() {
                                         </span>
                                     </td>
                                     <td className="text-end">
-                                        <a href="#" className="btn btn-sm btn-neutral">View</a>
+                                        <a href="/" className="btn btn-sm btn-neutral">View</a>
                                         <button type="button" className="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i className="bi bi-trash"></i>
                                         </button>
@@ -357,7 +367,7 @@ function Dashboard() {
                                 <tr>
                                     <td>
                                         <img alt="..." src="https://images.unsplash.com/photo-1610271340738-726e199f0258?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar avatar-sm rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Darlene Robertson
                                         </a>
                                     </td>
@@ -366,7 +376,7 @@ function Dashboard() {
                                     </td>
                                     <td>
                                         <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-2.png" className="avatar avatar-xs rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Netguru
                                         </a>
                                     </td>
@@ -379,7 +389,7 @@ function Dashboard() {
                                         </span>
                                     </td>
                                     <td className="text-end">
-                                        <a href="#" className="btn btn-sm btn-neutral">View</a>
+                                        <a href="/" className="btn btn-sm btn-neutral">View</a>
                                         <button type="button" className="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i className="bi bi-trash"></i>
                                         </button>
@@ -388,7 +398,7 @@ function Dashboard() {
                                 <tr>
                                     <td>
                                         <img alt="..." src="https://images.unsplash.com/photo-1610878722345-79c5eaf6a48c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar avatar-sm rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Theresa Webb
                                         </a>
                                     </td>
@@ -397,7 +407,7 @@ function Dashboard() {
                                     </td>
                                     <td>
                                         <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-3.png" className="avatar avatar-xs rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Figma
                                         </a>
                                     </td>
@@ -410,7 +420,7 @@ function Dashboard() {
                                         </span>
                                     </td>
                                     <td className="text-end">
-                                        <a href="#" className="btn btn-sm btn-neutral">View</a>
+                                        <a href="/" className="btn btn-sm btn-neutral">View</a>
                                         <button type="button" className="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i className="bi bi-trash"></i>
                                         </button>
@@ -419,7 +429,7 @@ function Dashboard() {
                                 <tr>
                                     <td>
                                         <img alt="..." src="https://images.unsplash.com/photo-1612422656768-d5e4ec31fac0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar avatar-sm rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Kristin Watson
                                         </a>
                                     </td>
@@ -428,7 +438,7 @@ function Dashboard() {
                                     </td>
                                     <td>
                                         <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-4.png" className="avatar avatar-xs rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Mailchimp
                                         </a>
                                     </td>
@@ -441,7 +451,7 @@ function Dashboard() {
                                         </span>
                                     </td>
                                     <td className="text-end">
-                                        <a href="#" className="btn btn-sm btn-neutral">View</a>
+                                        <a href="/" className="btn btn-sm btn-neutral">View</a>
                                         <button type="button" className="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i className="bi bi-trash"></i>
                                         </button>
@@ -450,7 +460,7 @@ function Dashboard() {
                                 <tr>
                                     <td>
                                         <img alt="..." src="https://images.unsplash.com/photo-1608976328267-e673d3ec06ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar avatar-sm rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Cody Fisher
                                         </a>
                                     </td>
@@ -459,7 +469,7 @@ function Dashboard() {
                                     </td>
                                     <td>
                                         <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-5.png" className="avatar avatar-xs rounded-circle me-2"/>
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Webpixels
                                         </a>
                                     </td>
@@ -472,7 +482,7 @@ function Dashboard() {
                                         </span>
                                     </td>
                                     <td className="text-end">
-                                        <a href="#" className="btn btn-sm btn-neutral">View</a>
+                                        <a href="/" className="btn btn-sm btn-neutral">View</a>
                                         <button type="button" className="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i className="bi bi-trash"></i>
                                         </button>
@@ -481,7 +491,7 @@ function Dashboard() {
                                 <tr>
                                     <td>
                                         <img alt="..." src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar avatar-sm rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Robert Fox
                                         </a>
                                     </td>
@@ -490,7 +500,7 @@ function Dashboard() {
                                     </td>
                                     <td>
                                         <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-1.png" className="avatar avatar-xs rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Dribbble
                                         </a>
                                     </td>
@@ -503,7 +513,7 @@ function Dashboard() {
                                         </span>
                                     </td>
                                     <td className="text-end">
-                                        <a href="#" className="btn btn-sm btn-neutral">View</a>
+                                        <a href="/" className="btn btn-sm btn-neutral">View</a>
                                         <button type="button" className="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i className="bi bi-trash"></i>
                                         </button>
@@ -512,7 +522,7 @@ function Dashboard() {
                                 <tr>
                                     <td>
                                         <img alt="..." src="https://images.unsplash.com/photo-1610271340738-726e199f0258?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar avatar-sm rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Darlene Robertson
                                         </a>
                                     </td>
@@ -521,7 +531,7 @@ function Dashboard() {
                                     </td>
                                     <td>
                                         <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-2.png" className="avatar avatar-xs rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Netguru
                                         </a>
                                     </td>
@@ -534,7 +544,7 @@ function Dashboard() {
                                         </span>
                                     </td>
                                     <td className="text-end">
-                                        <a href="#" className="btn btn-sm btn-neutral">View</a>
+                                        <a href="/" className="btn btn-sm btn-neutral">View</a>
                                         <button type="button" className="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i className="bi bi-trash"></i>
                                         </button>
@@ -543,7 +553,7 @@ function Dashboard() {
                                 <tr>
                                     <td>
                                         <img alt="..." src="https://images.unsplash.com/photo-1610878722345-79c5eaf6a48c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar avatar-sm rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Theresa Webb
                                         </a>
                                     </td>
@@ -552,7 +562,7 @@ function Dashboard() {
                                     </td>
                                     <td>
                                         <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-3.png" className="avatar avatar-xs rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Figma
                                         </a>
                                     </td>
@@ -565,7 +575,7 @@ function Dashboard() {
                                         </span>
                                     </td>
                                     <td className="text-end">
-                                        <a href="#" className="btn btn-sm btn-neutral">View</a>
+                                        <a href="/" className="btn btn-sm btn-neutral">View</a>
                                         <button type="button" className="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i className="bi bi-trash"></i>
                                         </button>
@@ -574,7 +584,7 @@ function Dashboard() {
                                 <tr>
                                     <td>
                                         <img alt="..." src="https://images.unsplash.com/photo-1612422656768-d5e4ec31fac0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar avatar-sm rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Kristin Watson
                                         </a>
                                     </td>
@@ -583,7 +593,7 @@ function Dashboard() {
                                     </td>
                                     <td>
                                         <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-4.png" className="avatar avatar-xs rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Mailchimp
                                         </a>
                                     </td>
@@ -596,7 +606,7 @@ function Dashboard() {
                                         </span>
                                     </td>
                                     <td className="text-end">
-                                        <a href="#" className="btn btn-sm btn-neutral">View</a>
+                                        <a href="/" className="btn btn-sm btn-neutral">View</a>
                                         <button type="button" className="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i className="bi bi-trash"></i>
                                         </button>
@@ -605,7 +615,7 @@ function Dashboard() {
                                 <tr>
                                     <td>
                                         <img alt="..." src="https://images.unsplash.com/photo-1608976328267-e673d3ec06ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80" className="avatar avatar-sm rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Cody Fisher
                                         </a>
                                     </td>
@@ -614,7 +624,7 @@ function Dashboard() {
                                     </td>
                                     <td>
                                         <img alt="..." src="https://preview.webpixels.io/web/img/other/logos/logo-5.png" className="avatar avatar-xs rounded-circle me-2" />
-                                        <a className="text-heading font-semibold" href="#">
+                                        <a className="text-heading font-semibold" href="/">
                                             Webpixels
                                         </a>
                                     </td>
@@ -627,7 +637,7 @@ function Dashboard() {
                                         </span>
                                     </td>
                                     <td className="text-end">
-                                        <a href="#" className="btn btn-sm btn-neutral">View</a>
+                                        <a href="/" className="btn btn-sm btn-neutral">View</a>
                                         <button type="button" className="btn btn-sm btn-square btn-neutral text-danger-hover">
                                             <i className="bi bi-trash"></i>
                                         </button>

@@ -119,16 +119,23 @@ function LoginSignupCards({ title, bottomTitle }) {
     try {
       // Set loading to true before making the axios request
       setLoading(true);
-
+      const token = localStorage.getItem('token');
+      
       const response = await axios.post("https://learning-server-olive.vercel.app/api/loginUser", {
         email: emailParam,
         password: password,
+        token: (token!=null)?token:"no-token"
       });
 
       setLoading(false);
 
       if (response.data.success === true) {
         setbackendResp(response.data.user.name);
+
+        // console.log(response.data.token);
+
+        localStorage.setItem("token", response.data.token);
+        document.cookie = `token=${response.data.token}; path=/`;
         setIsSuccess(true);
         setShowAlert(true);
         // console.log(response);
