@@ -11,6 +11,7 @@ import Register from "./components/Authorization/Register/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
 import RegisterBiometric from "./components/Discarded/RegisterBiometric";
 import Login from "./components/Authorization/Login/Login";
+import FlexboxGame from "./components/game/FlexboxGame";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             <Route path="/java-compiler" element={<JavaCodeCompiler />} />
             <Route path="/learning-options" element={<KnowledgeTest />} />
             <Route path="/learn-oops-in-java" element={<OopsBasics />} />
+            <Route path="/game" element={<FlexboxGame />} />
           </Routes>
         </EmailProvider>
       </BrowserRouter>
