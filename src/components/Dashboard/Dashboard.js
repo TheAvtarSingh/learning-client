@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
 import './Dashboard.css'
 import { useNavigate } from 'react-router-dom';
-
+import Sidebar from './Sidebar';
+import MainDash from './MainDash/MainDash';
+import RightSide from './RightSide/RightSide';
 function Dashboard() {
-    const navigate = useNavigate();
+   const navigate = useNavigate();
     useEffect(() => {
         const token = localStorage.getItem('token');
     
@@ -15,10 +17,16 @@ function Dashboard() {
   return (
     <>
    
- 
+   <div className="App">
+      <div className="AppGlass">
+        <Sidebar/>
+        <MainDash/>
+        <RightSide/>
+      </div>
+    </div>
 
  
-<div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
+{/*<div className="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
  
     <nav className="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg" id="navbarVertical">
         <div className="container-fluid">
@@ -654,7 +662,7 @@ function Dashboard() {
         </main>
     </div>
 </div>
-
+  */}
     </>
   )
 }
