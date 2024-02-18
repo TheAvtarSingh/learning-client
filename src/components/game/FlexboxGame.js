@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './FlexboxGame.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFrog, faBug } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faFrog, faBug } from '@fortawesome/free-solid-svg-icons';
 const FlexboxGame = () => {
     const [justifyContentValue, setJustifyContentValue] = useState('end');
     const [isCorrect, setIsCorrect] = useState(false);
@@ -97,14 +97,14 @@ const FlexboxGame = () => {
                     <div className={`col-md-6 ${isCorrect ? 'correct' : ''}`}>
                         <div className="container-with-border col-md-6"  >
                             <div className='container-with-white-border'>
-                                <FontAwesomeIcon
+                                {/* <FontAwesomeIcon
                                     icon={faBug}
                                     size='3x'
                                     style={{
                                         color: justifyContentValue === 'start' || justifyContentValue === 'flex-start' ? 'red' : 'black'
                                       }}
                                       
-                                />
+                                /> */}
                             </div>
                             <div
                                 className='container-with-circle-border'
@@ -114,8 +114,10 @@ const FlexboxGame = () => {
                                 }}
                             >
                                 {justifyContentValue !== 'start' && justifyContentValue !== 'flex-start' && (
-                                    <FontAwesomeIcon icon={faFrog} size="4x" className="frog-icon" />
-                                )}
+                                    <span> Bug</span>
+                                    // <FontAwesomeIcon icon={faFrog} size="4x" className="frog-icon" />
+                                )
+                                }
                             </div>
                         </div>
                     </div>
