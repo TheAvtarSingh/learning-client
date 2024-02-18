@@ -3,14 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './FlexboxGame.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFrog, faBug } from '@fortawesome/free-solid-svg-icons';
-import { Card, CardContent} from '@mui/material';
 const FlexboxGame = () => {
     const [justifyContentValue, setJustifyContentValue] = useState('end');
     const [isCorrect, setIsCorrect] = useState(false);
     const [emptyChecker, setEmptyChecker] = useState(false);
 
     const handleInputChange = (event) => {
-        if (event.target.value == '') {
+        if (event.target.value === '') {
             setJustifyContentValue(event.target.value);
             setEmptyChecker(true);
 
@@ -40,8 +39,9 @@ const FlexboxGame = () => {
     };
 
     return (
+        <div id='gamecontainer'>
         <div className="container">
-            <h2 className="text-center mt-8">Let us play a game to understand FlexBox</h2>
+            <h2 className="text-center pt-8">Let us play a game to understand FlexBox</h2>
             <div className='hh'>
                 <div className="d-flex justify-content-between">
                     <div className="mt-8">
@@ -122,6 +122,7 @@ const FlexboxGame = () => {
 
                 </div>
             </div>
+        </div>
         </div>
     );
 };

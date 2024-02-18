@@ -13,7 +13,8 @@ import Loader from "../loader/loader";
 import axios from "axios";
 
 const carouselBackgroundStyles = {
-  position: "relative",
+  position: "absolute",
+  top: "0",
   filter: "blur(2px)",
   height: "100px",
 };
