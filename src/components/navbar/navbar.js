@@ -4,7 +4,7 @@ import logo from '../../images/logo.png';
 import '../navbar/navbar.css';
 import { useTheme } from '../../context/ThemeContext';
 
-function NavbarComponent() {
+function NavbarComponent({isLogged = false}) {
   // const [darkMode, setDarkMode] = useState(false);
   const { darkMode, toggleDarkMode } = useTheme();
   // const toggleDarkMode = () => {
@@ -22,8 +22,12 @@ function NavbarComponent() {
   };
 
 
-
+  const token = localStorage.getItem('token');
   
+  const expireToken = () => {
+    localStorage.removeItem('token');
+    isLogged = false;
+  }
  
 
 
@@ -47,7 +51,7 @@ function NavbarComponent() {
           </form>
         </div>
      
-        <Link to="/login">  <button type='submit' className={`btn ${darkMode ? 'btn-primary shadow-lg bg-body-light': 'btn-light'}`} style={{ marginLeft: '10px' }}>  Login</button></Link>
+        <Link to={(token && isLogged) ? "/login" : "/dashboard-user"} onClick={(token && isLogged)? expireToken: null} >  <button type='submit' className={`btn ${darkMode ? 'btn-primary shadow-lg bg-body-light': 'btn-light'}`} style={{ marginLeft: '10px' }}>  {isLogged?  "Logout" : "Login"}</button></Link>
        
         <Link to="/learning-options">  <button type='submit' className={`btn ${darkMode ? 'btn-light' : 'btn-primary'}`} style={{ marginLeft: '10px' }}>Try Now</button></Link>
        
