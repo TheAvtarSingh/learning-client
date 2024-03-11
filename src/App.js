@@ -50,7 +50,7 @@ function App() {
             <Route path="/learning-options" element={<KnowledgeTest />} />
             <Route path="/learn-oops-in-java" element={<OopsBasics />} />
             <Route path="/game" element={<FlexboxGame />} />
-            <Route path='/course' element={<Course />} />
+            <Route path='/course' element={<Course />} /> 
           </Routes>
         </EmailProvider>
       </BrowserRouter>

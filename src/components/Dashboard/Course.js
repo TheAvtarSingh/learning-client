@@ -90,6 +90,7 @@ function Course() {
                                                     onClick={() => handlePlayVideo(videoId, index)}
                                                     onEnded={handleVideoEnded}
                                                 ></iframe>
+                                                
                                             </div>
                                         ))}
                                     </div>
