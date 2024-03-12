@@ -13,6 +13,7 @@ import RegisterBiometric from "./components/Discarded/RegisterBiometric";
 import Login from "./components/Authorization/Login/Login";
 import FlexboxGame from "./components/game/FlexboxGame";
 import Course from "./components/Dashboard/Course";
+import Chatbot from "./components/Dashboard/Chatbot";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
             <Route path="/learn-oops-in-java" element={<OopsBasics />} />
             <Route path="/game" element={<FlexboxGame />} />
             <Route path='/course' element={<Course />} /> 
+            <Route path='/chatbot' element={<Chatbot />} />
           </Routes>
         </EmailProvider>
       </BrowserRouter>

@@ -12,10 +12,15 @@ function Course() {
         if (thumbnails.length > 0) {
             const playlist = thumbnails.map(item => item.videoId);
             setPlaylist(playlist);
+            setShowModal(true); // Show the modal when thumbnails are available
+            setCurrentVideoIndex(0); // Reset current video index
+        } else {
+            setShowModal(false); // Hide the modal if no thumbnails are available
         }
     }, [thumbnails]);
 
     const handleSubmit = () => {
+        console.log("Submit button clicked");
         axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=${encodeURIComponent(keywords)} full beginner course &type=video&key=AIzaSyAq_svJtuS05zuIE36LqCS3FagqSYGYens`)
             .then(res => {
                 const items = res.data.items;
@@ -25,7 +30,6 @@ function Course() {
                     videoId: item.id.videoId
                 }));
                 setThumbnails(thumbnailUrls);
-                setShowModal(thumbnailUrls.length > 0);
             })
             .catch(error => {
                 console.error("Error in fetching data", error);
@@ -37,12 +41,16 @@ function Course() {
         return shuffled.slice(0, count);
     };
 
-    const handlePlayVideo = (videoId, index) => {
+    const handlePlayVideo = (index) => {
         setCurrentVideoIndex(index);
     }
 
-    const handleVideoEnded = () => {
+    const handleNextVideo = () => {
         setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % playlist.length);
+    }
+
+    const handlePreviousVideo = () => {
+        setCurrentVideoIndex((prevIndex) => (prevIndex - 1 + playlist.length) % playlist.length);
     }
 
     return (
@@ -69,7 +77,7 @@ function Course() {
                 </div>
             </div>
             {showModal && (
-                <div className="modal" style={{ display: showModal ? 'block' : 'none' }}>
+                <div className="modal mt-5" style={{ display: 'block' }}>
                     <div className="modal-dialog modal-dialog-centered modal-dialog-start modal-lg mx-auto ms-5">
                         <div className="modal-content" style={{ backgroundColor: '#f8f9fa', borderRadius: '10px' }}>
                             <div className="modal-header">
@@ -79,20 +87,19 @@ function Course() {
                             <div className="modal-body">
                                 <div className="container-fluid">
                                     <div className="row">
-                                        {playlist.map((videoId, index) => (
-                                            <div key={index} className="col-lg-4 col-md-6 col-sm-12 mb-3" style={{ position: 'relative' }}>
-                                                <iframe
-                                                    src={`https://www.youtube.com/embed/${videoId}`}
-                                                    title={`Video ${index + 1}`}
-                                                    allowFullScreen
-                                                    className="img-fluid"
-                                                    style={{ marginBottom: '10px', cursor: 'pointer' }}
-                                                    onClick={() => handlePlayVideo(videoId, index)}
-                                                    onEnded={handleVideoEnded}
-                                                ></iframe>
-                                                
+                                        <div className="col-lg-12 text-center ms-5">
+                                            <iframe
+                                                src={`https://www.youtube.com/embed/${playlist[currentVideoIndex]}`}
+                                                title={`Video ${currentVideoIndex + 1}`}
+                                                allowFullScreen
+                                                className="img-fluid"
+                                                style={{ width: '80%', height: '400px', display: 'block', cursor: 'pointer' }}
+                                            ></iframe>
+                                            <div className='mt-2' style={{marginRight:'145px'}}>
+                                                <button className="btn btn-primary me-2" onClick={handlePreviousVideo} disabled={currentVideoIndex === 0}>Previous</button>
+                                                <button className="btn btn-primary" onClick={handleNextVideo} disabled={currentVideoIndex === playlist.length - 1}>Next</button>
                                             </div>
-                                        ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
