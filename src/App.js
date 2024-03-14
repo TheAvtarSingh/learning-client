@@ -14,6 +14,7 @@ import Login from "./components/Authorization/Login/Login";
 import FlexboxGame from "./components/game/FlexboxGame";
 import Course from "./components/Dashboard/Course";
 import Chatbot from "./components/Dashboard/Chatbot";
+import NotFound from "./components/NotFound/NotFound";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
             <Route path="/game" element={<FlexboxGame />} />
             <Route path='/course' element={<Course />} /> 
             <Route path='/chatbot' element={<Chatbot />} />
+            <Route path="*" element= {<NotFound />} />
           </Routes>
         </EmailProvider>
       </BrowserRouter>
