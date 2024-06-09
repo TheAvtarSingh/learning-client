@@ -1,6 +1,6 @@
 #gamecontainer {
-  width: 100vw;
-  height: 100vh;
+  width: 253%;
+  height: 90vh;
     background: rgb(232,238,174);
     background: radial-gradient(circle, rgba(232,238,174,1) 0%, rgba(128,233,175,1) 100%);
 }

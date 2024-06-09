@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
-
+import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -11,6 +11,7 @@ import { Tooltip } from "react-tooltip";
 import { useNavigate } from "react-router-dom";
 import Loader from "../loader/loader";
 import axios from "axios";
+import { setUser } from "../../redux/userActions";
 
 const carouselBackgroundStyles = {
   position: "absolute",
@@ -47,6 +48,8 @@ export const AlertComponent = ({ className, message, messageCore }) => {
   );
 };
 
+export let userData;
+
 function LoginSignupCards({ title, bottomTitle }) {
   const [emailParam, setEmailParam] = useState("");
   const location = useLocation();
@@ -59,7 +62,7 @@ function LoginSignupCards({ title, bottomTitle }) {
   const [showAlert, setShowAlert] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [countdown, setCountdown] = useState(3);
-
+  const dispatch = useDispatch();
   const [backendResp, setbackendResp] = useState("");
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -120,25 +123,61 @@ function LoginSignupCards({ title, bottomTitle }) {
     try {
       // Set loading to true before making the axios request
       setLoading(true);
-      const token = localStorage.getItem('token');
-      
-      const response = await axios.post("https://learning-server-olive.vercel.app/api/loginUser", {
-        email: emailParam,
-        password: password,
-        token: (token!=null)?token:"no-token"
-      });
+      const token = localStorage.getItem("token");
+      let response;
+      if (password.includes(".doubtsolver.")) {
+        response = await axios.post(
+          "https://learning-server-olive.vercel.app/api/loginDoubtSolver",
+          {
+            email: emailParam,
+            password: password,
+            token: token != null ? token : "no-token",
+          }
+        );
+      } else if (password.includes(".admin.")) {
+        console.log("in this");
+        response = await axios.post(
+          "https://learning-server-olive.vercel.app/api/loginAdmin",
+          {
+            email: emailParam,
+            password: password,
+            token: token != null ? token : "no-token",
+          }
+        );
+      } else {
+        response = await axios.post(
+          "https://learning-server-olive.vercel.app/api/loginUser",
+          {
+            email: emailParam,
+            password: password,
+            token: token != null ? token : "no-token",
+          }
+        );
+      }
 
       setLoading(false);
 
       if (response.data.success === true) {
+        userData = response;
         setbackendResp(response.data.user.name);
 
         // console.log(response.data.token);
-
+        dispatch(setUser(response.data.user));
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userName", response.data.user.name);
+        localStorage.setItem("email", response.data.user.email);
         document.cookie = `token=${response.data.token}; path=/`;
         setIsSuccess(true);
         setShowAlert(true);
+
+        if (password.includes(".doubtsolver.")) {
+          localStorage.setItem("userType", "doubtsolver");
+        } else if (password.includes(".admin.")) {
+          localStorage.setItem("userType", "admin");
+         
+        } else {
+          localStorage.setItem("userType", "user");
+        }
         // console.log(response);
       } else {
         setbackendResp(response.data.error);

@@ -54,7 +54,15 @@ function Login() {
     // Redirect after 3 seconds
     setTimeout(() => {
       clearInterval(countdownInterval);
-      navigate(`/dashboard-user`, { replace: true });
+      const userType = localStorage.getItem("userType");
+      if (userType==="doubtsolver") {
+        navigate(`/dashboard-doubt-solver`, { replace: true });
+      }else if(userType==="admin"){
+        navigate(`/dashboard-admin`, { replace: true });
+      }else{
+        navigate(`/dashboard-user`, { replace: true });
+      }
+      
     }, 3000);
   };
 

@@ -12,6 +12,7 @@ body, html {
     justify-content: center;
     align-items: center;
     position: relative;
+    width: 50%;
    
   }
   
@@ -27,15 +28,15 @@ body, html {
     width: 100%;
     padding: 16px;
     position: absolute;
-    bottom: 0;
+    bottom: -13px;
   }
   
   .prev-button,
   .next-button{
     border-radius: 5px;
     padding: 10px 20px;
-    background-color: #333; 
-    color: #fff; 
+    background-color: #fff; 
+    color: #333; 
     border: none;
     cursor: pointer;
     font-size: 16px;
@@ -66,22 +67,16 @@ body, html {
     max-width: 400px; 
   }
 
-  .full_Screen {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;  
-    background-color: #04030394;
-    filter:blur(2px),
+  .fullscreen {
+   
+    background-color: rgb(52, 58, 64);
+    
 
   }
   
+  .discuss-doubts{
+    width: 50%;
+  }
   
   
   

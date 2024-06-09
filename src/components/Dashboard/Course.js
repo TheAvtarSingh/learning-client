@@ -54,32 +54,33 @@ function Course() {
     }
 
     return (
-        <div className="container">
-            <div className="row">
+        <div className="" style={{background: "linear-gradient(135deg, #153677, #4e085f)",color:"white",borderRadius:"20px",width:"100%"}}>
+
+            <div className="row" style={{marginTop:"20px"}}> 
                 <div className="col text-center">
                     <h1 className="display-4">Let's Start Learning</h1>
                 </div>
             </div>
             <div className="row">
                 <div className="col">
-                    <div className="input-group mb-3 mt-2">
+                    <div className="input-group mb-3 mt-2 ">
                         <input
                             type="text"
-                            className="form-control"
-                            style={{ width: '150px' }}
+                            className="form-control mx-5"
+                           style={{width:"50vw",borderRadius:"10px"}}
                             value={keywords}
                             onChange={e => setKeywords(e.target.value)}
                             placeholder="Enter Course Keywords"
                             aria-label="Keywords"
                         />
-                        <button className="btn btn-primary ms-2" type="button" onClick={handleSubmit}>Submit</button>
+                        <button className="btn btn-primary ms-4 mx-4" type="button" onClick={handleSubmit}>Submit</button>
                     </div>
                 </div>
             </div>
             {showModal && (
-                <div className="modal mt-5" style={{ display: 'block' }}>
+                <div className="modal mt-5" style={{ display: 'block'  }}>
                     <div className="modal-dialog modal-dialog-centered modal-dialog-start modal-lg mx-auto ms-5">
-                        <div className="modal-content" style={{ backgroundColor: '#f8f9fa', borderRadius: '10px' }}>
+                        <div className="modal-content" style={{ backgroundColor: '#f8f9fa', borderRadius: '10px' , position:"absolute",right:"-504px"}}>
                             <div className="modal-header">
                                 <h5 className="modal-title">Top Ranked {keywords} Courses</h5>
                                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
@@ -89,9 +90,10 @@ function Course() {
                                     <div className="row">
                                         <div className="col-lg-12 text-center ms-5">
                                             <iframe
-                                                src={`https://www.youtube.com/embed/${playlist[currentVideoIndex]}`}
+                                                src={`https://www.youtube.com/embed/${playlist[currentVideoIndex]}?autoplay=1`}
                                                 title={`Video ${currentVideoIndex + 1}`}
                                                 allowFullScreen
+                                                allow='autoplay'
                                                 className="img-fluid"
                                                 style={{ width: '80%', height: '400px', display: 'block', cursor: 'pointer' }}
                                             ></iframe>

@@ -1,115 +1,214 @@
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Card from 'react-bootstrap/Card';
-import Spinner from 'react-bootstrap/Spinner'; 
-import Alert from 'react-bootstrap/Alert'; 
-import { useTheme } from '../../../context/ThemeContext';
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
+import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
+import { useTheme } from "../../../context/ThemeContext";
+import { useDebounce } from "../../../hooks/debouncing";
+import { decryptData, processMessageToChatGPT } from "../../Dashboard/Chatbot";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
-function JavaCodeCompiler() {
-  const { darkMode } = useTheme(); 
-  const [code, setCode] = useState('');
-  const [compiledCode, setCompiledCode] = useState('');
-  const [error, setError] = useState('');
-  const [status, setStatus] = useState('Write to Start ....');
-  const [isLoading, setIsLoading] = useState(false); // State to track loading status
+export const defaultCode =
+  'public class Main{\n  public static void main(String[] args){\n    System.out.println("Hello");\n  }\n}';
+
+function JavaCodeCompiler({ embeddedCode = defaultCode, testingCode }) {
+  const { langauage } = useParams();
+  const { darkMode } = useTheme();
+  const [code, setCode] = useState("");
+  const [compiledCode, setCompiledCode] = useState("Write Code to Start....");
+  const [compilerError, setCompilerError] = useState("");
+  const [compilerStatus, setCompilerStatus] = useState("Write to Start ....");
+  const [aiSuggestions, setAiSuggestions] = useState("Write Code to Start....");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAiLoading, setAiIsLoading] = useState(false);
+  const [errorLines, setErrorLines] = useState([]);
+
+  const debouncedValue = useDebounce(code, 3000);
 
   const compileCode = async () => {
-    const lang = "java";
+    if (debouncedValue) {
+      const lang = "java";
 
-    // Set loading to true while compiling
-    setIsLoading(true);
-    setStatus("Compiling....");
+      setIsLoading(true);
+      setCompilerStatus("Compiling....");
 
-    try {
-      const response = await fetch('https://learning-server-olive.vercel.app/api/compile', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify({ lang, code })
-      });
-      const data = await response.json();
-      console.log(data);
+      try {
+        const response = await axios.post(
+          "https://learning-server-olive.vercel.app/core/compile-java",
+          {
+            files: [
+              {
+                name: "Main.java",
+                content: code,
+              },
+            ],
+          }
+        );
 
-      // Set the compiled code and clear error on success
-      setCompiledCode(data.data.data.output);
-      setStatus(data.message);
-      setError('');
-    } catch (error) {
-      console.error(error);
+        const data = response.data;
+        const output = data.stdout || data.stderr;
 
-      // Set error message on failure
-      setError('An error occurred during compilation.');
-      setCompiledCode('');
-      setStatus("Error")
-    } finally {
-      // Set loading to false when compilation is finished
-      setIsLoading(false);
+        setCompiledCode(output);
+
+        // Extract error lines
+        if (output.includes("error")) {
+          const errorLines = output
+            .split("\n")
+            .filter((line) => line.includes("error"));
+          setErrorLines(
+            errorLines
+              .map((line) => {
+                const match = line.match(/Main.java:(\d+):/);
+                return match ? parseInt(match[1], 10) : null;
+              })
+              .filter((line) => line !== null)
+          );
+          setCompilerError("Compilation Error");
+        } else {
+          setErrorLines([]);
+          setCompilerError("");
+        }
+
+        setCompilerStatus("Compilation Complete");
+        setIsLoading(false);
+        // Process message for AI suggestions
+        const newMessages = [{ message: output, sender: "user" }];
+        try {
+          setAiIsLoading(true);
+          
+          const API_KEY_RESPONSE = await axios.get(`https://learning-server-olive.vercel.app/keys/getBardKey`);
+          const { encryptedData} = API_KEY_RESPONSE.data;
+          const key = decryptData(encryptedData);
+          
+          const responseMessage = await processMessageToChatGPT(
+            newMessages,
+            key
+          );
+          console.log(responseMessage);
+          setAiSuggestions(responseMessage);
+          setAiIsLoading(false);
+        } catch (error) {
+          console.error(error);
+          setAiSuggestions("Error fetching AI suggestions.");
+          setAiIsLoading(false);
+        }
+      } catch (error) {
+        console.error(error);
+        setCompilerError("An error occurred during compilation.");
+        setCompiledCode("");
+        setCompilerStatus("Error");
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
+  useEffect(() => {
+    compileCode();
+  }, [debouncedValue]);
+
+  const handleCodeChange = (e) => {
+    setCode(e.target.value);
+    setCompiledCode("");
+    setAiSuggestions("");
+    setCompilerStatus("Write to Start ....");
+    setErrorLines([]);
+  };
+
   const compilerStyle = {
-    height: '100vh',
-    backgroundColor: darkMode ? 'rgb(52, 58, 64)' : 'rgb(171, 171, 171)',
-    color: darkMode ? 'white' : 'black', 
+    height: "100vh",
+    width: "100%",
+    backgroundColor: darkMode ? "rgb(52, 58, 64)" : null,
+    color: darkMode ? "white" : "black",
+  };
+
+  const renderHighlightedCode = () => {
+    return code.split("\n").map((line, index) => (
+      <div
+        key={index}
+        style={{
+          backgroundColor: errorLines.includes(index + 1)
+            ? "rgba(255, 0, 0, 0.3)"
+            : "transparent",
+        }}
+      >
+        {line}
+      </div>
+    ));
   };
 
   return (
-    <div style={compilerStyle} className="pb-5">
-      <div className=" container text-white pt-4">
-        <Card >
+    <div style={compilerStyle}>
+      <div className="container text-white pt-4">
+        <Card>
           <Card.Body>
-            <h2 className="mb-4">Java Code Compiler</h2>
+            <h2 className="mb-4">{(langauage ? `${langauage.substring(0,1).toUpperCase()}${langauage.substring(1)}`:"Java" )} Code Compiler</h2>
             <Form>
               <Form.Group controlId="code">
-                <Form.Label>Enter Java Code: </Form.Label>
-                <Form.Label className='d-flex'>Status : {status}</Form.Label>
+                <Form.Label>Enter {(langauage ? `${langauage.substring(0,1).toUpperCase()}${langauage.substring(1)}`:"Java" )} Code:</Form.Label>
+                <Form.Label className="d-flex">
+                  Status: {compilerStatus}
+                </Form.Label>
                 <Form.Control
                   as="textarea"
-                  rows={10}
+                  rows={5}
                   value={code}
-placeholder={`public class Main{
-  public static void main(String[] args){
-  //  Define Main Class
-  }
-}`}
-                  onChange={(e) => setCode(e.target.value)}
+                  placeholder={defaultCode}
+                  onChange={handleCodeChange}
+                  style={{ whiteSpace: "pre-wrap", fontFamily: "monospace" }}
                 />
+                <pre>{renderHighlightedCode()}</pre>
               </Form.Group>
-              <Button variant="primary" className='mt-4' onClick={compileCode}>
-                Compile 
-              </Button>
-             
             </Form>
           </Card.Body>
         </Card>
 
-        {isLoading && (
-          <div className="mt-4 text-center">
-            <Spinner animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
-          </div>
-        )}
+        <div className="mt-4">
+          <Card>
+            <Card.Body className="success">
+              <h3>
+                Compiled Code:<i className="bi bi-file-earmark-code-fill"></i>
+              </h3>
 
-        {error && (
-          <div className="mt-4">
-            <Alert variant="danger">{error}</Alert>
-          </div>
-        )}
+              {isLoading && (
+                <div className="mt-4 text-center">
+                  <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                </div>
+              )}
+              {compiledCode && !isLoading && (
+                <p className="text text-success">{compiledCode}</p>
+              )}
+            </Card.Body>
+          </Card>
+        </div>
 
-        {compiledCode && !isLoading && (
-          <div className="mt-4">
-            <Card>
-              <Card.Body className='success'>
-                <h3>Compiled Code:</h3>
-                <pre>{compiledCode}</pre>
-              </Card.Body>
-            </Card>
-          </div>
-        )}
+        <div className="mt-4">
+          <Card>
+            <Card.Body className="success">
+              <h3>
+                AI Suggestions:<i className="bi bi-robot"></i>
+              </h3>
+
+              {isAiLoading && (
+                <div className="mt-4 text-center">
+                  <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                </div>
+              )}
+              {aiSuggestions && !isAiLoading && (
+                <i>
+                  <p className="text text-primary">{aiSuggestions}</p>
+                </i>
+              )}
+            </Card.Body>
+          </Card>
+        </div>
       </div>
     </div>
   );
